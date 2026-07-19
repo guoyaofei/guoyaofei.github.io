@@ -830,10 +830,14 @@ figure {
 }
 
 .offer-card-featured {
-  background: var(--navy);
-  color: var(--cream);
-  border-color: var(--navy);
-  box-shadow: inset 8px 0 0 var(--orange);
+  background: rgba(237, 132, 39, 0.08);
+  color: var(--navy);
+  border-color: rgba(11, 36, 59, 0.35);
+  box-shadow: none;
+}
+
+.offer-card:nth-child(even) {
+  background: rgba(237, 132, 39, 0.08);
 }
 
 .offer-card-top {
@@ -1744,43 +1748,38 @@ footer {
 
 /* 第5版：早舟智能咨询助手演示框架 */
 .smart-assistant {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
+  position: relative;
+  flex: 0 0 auto;
   z-index: 300;
 }
 
 .assistant-launcher {
-  min-width: 220px;
-  min-height: 68px;
-  padding: 9px 18px 9px 10px;
+  min-width: 142px;
+  min-height: 48px;
+  padding: 7px 13px 7px 7px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 0;
+  border: 1px solid var(--navy);
   border-radius: 0;
-  background: var(--orange);
+  background: transparent;
   color: var(--navy);
-  box-shadow: 8px 8px 0 var(--navy), 0 16px 34px rgba(11, 36, 59, 0.2);
+  box-shadow: none;
   font: inherit;
   text-align: left;
   cursor: pointer;
 }
 
-.smart-assistant.is-open .assistant-launcher {
-  visibility: hidden;
-}
-
 .assistant-launcher-icon {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
   display: grid;
   place-items: center;
   background: var(--navy);
   color: var(--cream);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -1791,14 +1790,14 @@ footer {
 }
 
 .assistant-launcher small {
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.12em;
   opacity: 0.72;
 }
 
 .assistant-launcher strong {
-  font-size: 17px;
+  font-size: 13px;
 }
 
 .assistant-backdrop {
@@ -1810,6 +1809,9 @@ footer {
 }
 
 .assistant-panel {
+  position: fixed;
+  right: 24px;
+  top: calc(var(--header-height) + 14px);
   width: min(460px, calc(100vw - 32px));
   height: min(760px, calc(100svh - 48px));
   display: grid;
@@ -2168,6 +2170,15 @@ summary:focus-visible {
 
   .desktop-nav a {
     font-size: 15px;
+  }
+
+  .assistant-launcher {
+    min-width: 46px;
+    padding: 6px;
+  }
+
+  .assistant-launcher > span:last-child {
+    display: none;
   }
 
   .brand {
@@ -2742,29 +2753,27 @@ summary:focus-visible {
   }
 
   .smart-assistant {
-    right: 14px;
-    bottom: 14px;
+    position: relative;
+    right: auto;
+    bottom: auto;
   }
 
   .assistant-launcher {
-    min-width: 0;
-    min-height: 58px;
-    padding: 7px 13px 7px 7px;
-    box-shadow: 6px 6px 0 var(--navy), 0 12px 28px rgba(11, 36, 59, 0.2);
+    min-width: 42px;
+    min-height: 42px;
+    padding: 5px;
+    border-color: rgba(11, 36, 59, 0.45);
+    box-shadow: none;
   }
 
   .assistant-launcher-icon {
-    width: 44px;
-    height: 44px;
-    flex-basis: 44px;
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
   }
 
-  .assistant-launcher small {
-    font-size: 9px;
-  }
-
-  .assistant-launcher strong {
-    font-size: 14px;
+  .assistant-launcher > span:last-child {
+    display: none;
   }
 
   .assistant-backdrop {
@@ -2839,6 +2848,18 @@ summary:focus-visible {
   <header class="site-header"><div class="header-inner">
     <a class="brand" href="#top" aria-label="早舟科技首页"><span class="brand-mark"><img class="static-logo" src="assets/zaozhou-symbol.png" alt=""></span><span class="brand-copy"><span class="brand-wordmark"><img class="static-wordmark" src="assets/zaozhou-wordmark-v3.png" alt="早舟®"></span></span></a>
     <nav class="desktop-nav" aria-label="主导航"><a href="#about">关于早舟</a><a href="#solutions">解决方案</a><a href="#products">产品服务</a><a href="#cases">案例成果</a><a href="#media">内容中心</a><a href="#contact">联系我们</a></nav>
+    <aside class="smart-assistant" id="ai-consulting" aria-label="早舟智能咨询助手演示版">
+      <button class="assistant-launcher" id="assistant-launcher" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="assistant-launcher-icon">AI</span><span><small>第5版新功能</small><strong>智能咨询</strong></span></button>
+      <div class="assistant-backdrop" id="assistant-backdrop" hidden></div>
+      <section class="assistant-panel" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-title" hidden>
+        <header class="assistant-panel-header"><div><span class="assistant-status"><i></i> 演示版在线</span><h2 id="assistant-title">早舟智能咨询助手</h2></div><button type="button" id="assistant-close" aria-label="关闭智能咨询助手">×</button></header>
+        <div class="assistant-notice"><strong>AI演示说明</strong><span>依据官网与预设规则回答 · 不上传、不保存本轮内容</span></div>
+        <div class="assistant-messages" id="assistant-messages" aria-live="polite"><article class="assistant-message assistant-reply"><span class="assistant-avatar">早舟AI</span><div><h3>您好，我是早舟智能咨询助手</h3><p>我可以帮助您了解早舟科技、产业学院、学校内涵建设、AI赋能场景和平哥系列产品，也可以用三个问题完成一次需求预诊断。</p><ul><li>当前为第5版演示框架</li><li>回答来自官网公开内容与预设规则</li><li>本轮对话不会上传或保存</li></ul><small>回答依据：早舟官网第5版演示知识库</small></div></article><div id="assistant-diagnosis-step"></div></div>
+        <div class="assistant-quick-questions" id="assistant-quick-questions"><button type="button" data-question="我来自院校">我来自院校</button><button type="button" data-question="我来自企业">我来自企业</button><button type="button" data-question="我想了解课程">我想了解课程</button><button type="button" data-question="我有项目难题">我有项目难题</button></div>
+        <form class="assistant-input" id="assistant-input"><label class="sr-only" for="assistant-question">输入您的问题</label><input id="assistant-question" placeholder="例如：8800元工作坊适合谁？" maxlength="160"><button type="submit" aria-label="发送问题">↑</button></form>
+        <footer class="assistant-panel-footer"><button type="button" id="assistant-reset">重新开始</button><a href="#contact" id="assistant-human">转人工服务</a></footer>
+      </section>
+    </aside>
     <a class="header-cta" href="#diagnosis">预约诊断</a>
     <details class="mobile-menu"><summary>目录</summary><nav><a href="#about">关于早舟</a><a href="#solutions">解决方案</a><a href="#products">产品服务</a><a href="#cases">案例成果</a><a href="#media">内容中心</a><a href="#contact">联系我们</a><a href="#diagnosis">预约诊断</a></nav></details>
   </div></header>
@@ -2891,18 +2912,6 @@ summary:focus-visible {
     <section class="contact-section" id="contact"><div class="section contact-inner"><div class="contact-heading"><p class="section-index">08 / 联系我们</p><h2>把您的问题，<br>变成下一步行动</h2><p>无论您正在筹建产业学院、推动学校内涵建设，还是希望用 AI 提升团队效率，都可以先从一次项目诊断开始。</p><div class="phone-list"><a href="tel:15213217592"><small>朱老师 · 工作坊与服务预约</small><strong>152 1321 7592</strong></a><a href="tel:18696987413"><small>杜老师 · 项目与专家咨询</small><strong>186 9698 7413</strong></a></div></div><div class="qr-grid"><figure><div><img class="static-qr" src="assets/wechat-workshop-qr.jpg" alt="工作坊预约报名二维码"></div><figcaption><strong>工作坊与课程预约</strong><span>扫码添加朱老师，发送“姓名＋单位＋意向产品”，快速确认名额、时间与报名流程。</span></figcaption></figure><figure><div><img class="static-qr" src="assets/wechat-consulting-qr.jpg" alt="项目咨询预约报名二维码"></div><figcaption><strong>项目与专家咨询</strong><span>适合产业学院、内涵建设、AI工作流及机构合作，扫码后发送已生成的咨询摘要。</span></figcaption></figure></div></div></section>
   </main>
   <footer><div class="footer-inner"><div><strong>重庆市早舟科技有限公司</strong><span>前身：重庆市九源教育</span></div><p>产教融合 · 学校内涵建设 · AI 赋能教育</p><a href="#top">返回顶部 ↑</a></div></footer>
-  <aside class="smart-assistant" id="ai-consulting" aria-label="早舟智能咨询助手演示版">
-    <button class="assistant-launcher" id="assistant-launcher" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="assistant-launcher-icon">AI</span><span><small>第5版新功能</small><strong>智能咨询助手</strong></span></button>
-    <div class="assistant-backdrop" id="assistant-backdrop" hidden></div>
-    <section class="assistant-panel" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-title" hidden>
-      <header class="assistant-panel-header"><div><span class="assistant-status"><i></i> 演示版在线</span><h2 id="assistant-title">早舟智能咨询助手</h2></div><button type="button" id="assistant-close" aria-label="关闭智能咨询助手">×</button></header>
-      <div class="assistant-notice"><strong>AI演示说明</strong><span>依据官网与预设规则回答 · 不上传、不保存本轮内容</span></div>
-      <div class="assistant-messages" id="assistant-messages" aria-live="polite"><article class="assistant-message assistant-reply"><span class="assistant-avatar">早舟AI</span><div><h3>您好，我是早舟智能咨询助手</h3><p>我可以帮助您了解早舟科技、产业学院、学校内涵建设、AI赋能场景和平哥系列产品，也可以用三个问题完成一次需求预诊断。</p><ul><li>当前为第5版演示框架</li><li>回答来自官网公开内容与预设规则</li><li>本轮对话不会上传或保存</li></ul><small>回答依据：早舟官网第5版演示知识库</small></div></article><div id="assistant-diagnosis-step"></div></div>
-      <div class="assistant-quick-questions" id="assistant-quick-questions"><button type="button" data-question="我来自院校">我来自院校</button><button type="button" data-question="我来自企业">我来自企业</button><button type="button" data-question="我想了解课程">我想了解课程</button><button type="button" data-question="我有项目难题">我有项目难题</button></div>
-      <form class="assistant-input" id="assistant-input"><label class="sr-only" for="assistant-question">输入您的问题</label><input id="assistant-question" placeholder="例如：8800元工作坊适合谁？" maxlength="160"><button type="submit" aria-label="发送问题">↑</button></form>
-      <footer class="assistant-panel-footer"><button type="button" id="assistant-reset">重新开始</button><a href="#contact" id="assistant-human">转人工服务</a></footer>
-    </section>
-  </aside>
   <script>
     const consultationForm = document.getElementById('diagnosis-form');
     const summaryBox = document.getElementById('form-summary');
@@ -2912,8 +2921,7 @@ summary:focus-visible {
     consultationForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const data = new FormData(consultationForm);
-      summaryText.textContent = ['【早舟项目咨询预诊断】','姓名：'+valueOf(data,'name'),'单位：'+valueOf(data,'organization'),'身份：'+valueOf(data,'role'),'联系方式：'+valueOf(data,'contact'),'需求方向：'+valueOf(data,'need'),'项目阶段：'+valueOf(data,'stage'),'计划时间：'+valueOf(data,'timeline'),'预算范围：'+valueOf(data,'budget'),'核心问题：'+valueOf(data,'problem')].join('
-');
+      summaryText.textContent = ['【早舟项目咨询预诊断】','姓名：'+valueOf(data,'name'),'单位：'+valueOf(data,'organization'),'身份：'+valueOf(data,'role'),'联系方式：'+valueOf(data,'contact'),'需求方向：'+valueOf(data,'need'),'项目阶段：'+valueOf(data,'stage'),'计划时间：'+valueOf(data,'timeline'),'预算范围：'+valueOf(data,'budget'),'核心问题：'+valueOf(data,'problem')].join('\n');
       summaryBox.hidden = false;
       copyButton.textContent = '复制咨询摘要';
     });
