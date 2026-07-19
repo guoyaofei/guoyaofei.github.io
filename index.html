@@ -63,6 +63,18 @@ figure {
   margin: 0;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .skip-link {
   position: fixed;
   left: 18px;
@@ -1730,6 +1742,419 @@ footer {
   padding-bottom: 5px;
 }
 
+/* 第5版：早舟智能咨询助手演示框架 */
+.smart-assistant {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 300;
+}
+
+.assistant-launcher {
+  min-width: 220px;
+  min-height: 68px;
+  padding: 9px 18px 9px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--orange);
+  color: var(--navy);
+  box-shadow: 8px 8px 0 var(--navy), 0 16px 34px rgba(11, 36, 59, 0.2);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.smart-assistant.is-open .assistant-launcher {
+  visibility: hidden;
+}
+
+.assistant-launcher-icon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.assistant-launcher > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.assistant-launcher small {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.72;
+}
+
+.assistant-launcher strong {
+  font-size: 17px;
+}
+
+.assistant-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(11, 36, 59, 0.24);
+  backdrop-filter: blur(2px);
+}
+
+.assistant-panel {
+  width: min(460px, calc(100vw - 32px));
+  height: min(760px, calc(100svh - 48px));
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
+  overflow: hidden;
+  border: 1px solid rgba(244, 239, 229, 0.24);
+  background: #f7f2e9;
+  color: var(--navy);
+  box-shadow: 14px 14px 0 var(--orange), 0 24px 80px rgba(3, 18, 32, 0.38);
+}
+
+.assistant-panel[hidden] {
+  display: none;
+}
+
+.assistant-panel-header {
+  min-height: 92px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.assistant-panel-header h2 {
+  margin-top: 5px;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 23px;
+}
+
+.assistant-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.assistant-status i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 5px rgba(237, 132, 39, 0.16);
+}
+
+.assistant-panel-header > button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 239, 229, 0.32);
+  background: transparent;
+  color: var(--cream);
+  font-size: 29px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.assistant-notice {
+  min-height: 54px;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  border-bottom: 1px solid rgba(11, 36, 59, 0.16);
+  background: #f1e5d3;
+}
+
+.assistant-notice strong {
+  color: #b3571d;
+  font-size: 12px;
+}
+
+.assistant-notice span {
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: 0.68;
+}
+
+.assistant-messages {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px 18px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) transparent;
+}
+
+.assistant-message {
+  margin-bottom: 16px;
+}
+
+.visitor-message {
+  width: fit-content;
+  max-width: 82%;
+  margin-left: auto;
+  padding: 11px 14px;
+  background: var(--orange);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.assistant-reply {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.assistant-avatar {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.assistant-reply > div {
+  padding: 15px 16px;
+  border: 1px solid rgba(11, 36, 59, 0.18);
+  background: #fffdf8;
+}
+
+.assistant-reply h3 {
+  margin-bottom: 8px;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.assistant-reply p {
+  font-size: 13px;
+  line-height: 1.7;
+  opacity: 0.78;
+}
+
+.assistant-reply ul {
+  margin: 12px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid rgba(11, 36, 59, 0.12);
+  list-style: none;
+}
+
+.assistant-reply li {
+  position: relative;
+  padding: 4px 0 4px 15px;
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: 0.72;
+}
+
+.assistant-reply li::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  background: var(--orange);
+  transform: rotate(45deg);
+}
+
+.assistant-reply small {
+  display: block;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(11, 36, 59, 0.2);
+  font-size: 10px;
+  line-height: 1.5;
+  opacity: 0.5;
+}
+
+.assistant-reply a {
+  margin-top: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy);
+  color: var(--cream);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.assistant-reply a span {
+  color: var(--orange);
+  font-size: 17px;
+}
+
+.assistant-diagnosis-step {
+  margin: 4px 0 18px 54px;
+  padding: 16px;
+  border-left: 5px solid var(--orange);
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.assistant-diagnosis-step > span {
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.assistant-diagnosis-step h3 {
+  margin: 7px 0 12px;
+  font-size: 16px;
+}
+
+.assistant-diagnosis-step > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+}
+
+.assistant-diagnosis-step > div button {
+  min-height: 38px;
+  padding: 7px 8px;
+  border: 1px solid rgba(244, 239, 229, 0.28);
+  background: rgba(244, 239, 229, 0.06);
+  color: var(--cream);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.assistant-diagnosis-step > div button:hover,
+.assistant-diagnosis-step > div button:focus-visible {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--navy);
+}
+
+.assistant-cancel-diagnosis {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: var(--cream);
+  font-size: 10px;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.assistant-quick-questions {
+  padding: 10px 18px 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  border-top: 1px solid rgba(11, 36, 59, 0.12);
+}
+
+.assistant-quick-questions button {
+  min-height: 38px;
+  padding: 7px 9px;
+  border: 1px solid rgba(11, 36, 59, 0.24);
+  background: transparent;
+  color: var(--navy);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.assistant-quick-questions button:hover,
+.assistant-quick-questions button:focus-visible {
+  border-color: var(--orange);
+  background: rgba(237, 132, 39, 0.12);
+}
+
+.assistant-input {
+  padding: 0 18px 12px;
+  display: grid;
+  grid-template-columns: 1fr 46px;
+}
+
+.assistant-input input {
+  min-width: 0;
+  height: 46px;
+  padding: 0 13px;
+  border: 1px solid rgba(11, 36, 59, 0.28);
+  border-right: 0;
+  border-radius: 0;
+  background: #fffdf8;
+  color: var(--navy);
+  font: inherit;
+  font-size: 13px;
+}
+
+.assistant-input button {
+  border: 0;
+  background: var(--orange);
+  color: var(--navy);
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.assistant-panel-footer {
+  min-height: 44px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(11, 36, 59, 0.12);
+  background: #eee5d8;
+}
+
+.assistant-panel-footer button,
+.assistant-panel-footer a {
+  padding: 5px 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--navy);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.assistant-panel-footer a {
+  color: #b3571d;
+}
+
+.assistant-panel-footer button:hover,
+.assistant-panel-footer button:focus-visible,
+.assistant-panel-footer a:hover,
+.assistant-panel-footer a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
 a:focus-visible,
 summary:focus-visible {
   outline: 3px solid var(--orange);
@@ -2315,6 +2740,78 @@ summary:focus-visible {
   .footer-inner a {
     justify-self: start;
   }
+
+  .smart-assistant {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .assistant-launcher {
+    min-width: 0;
+    min-height: 58px;
+    padding: 7px 13px 7px 7px;
+    box-shadow: 6px 6px 0 var(--navy), 0 12px 28px rgba(11, 36, 59, 0.2);
+  }
+
+  .assistant-launcher-icon {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .assistant-launcher small {
+    font-size: 9px;
+  }
+
+  .assistant-launcher strong {
+    font-size: 14px;
+  }
+
+  .assistant-backdrop {
+    background: rgba(11, 36, 59, 0.52);
+  }
+
+  .assistant-panel {
+    position: fixed;
+    inset: 8px;
+    width: auto;
+    height: auto;
+    max-height: none;
+    box-shadow: none;
+  }
+
+  .assistant-panel-header {
+    min-height: 78px;
+    padding: 13px 15px;
+  }
+
+  .assistant-panel-header h2 {
+    font-size: 20px;
+  }
+
+  .assistant-notice {
+    padding-inline: 15px;
+  }
+
+  .assistant-messages {
+    padding: 16px 13px 8px;
+  }
+
+  .assistant-quick-questions {
+    padding: 8px 13px 10px;
+  }
+
+  .assistant-input {
+    padding: 0 13px 10px;
+  }
+
+  .assistant-panel-footer {
+    padding-inline: 13px;
+  }
+
+  .assistant-diagnosis-step {
+    margin-left: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2394,6 +2891,18 @@ summary:focus-visible {
     <section class="contact-section" id="contact"><div class="section contact-inner"><div class="contact-heading"><p class="section-index">08 / 联系我们</p><h2>把您的问题，<br>变成下一步行动</h2><p>无论您正在筹建产业学院、推动学校内涵建设，还是希望用 AI 提升团队效率，都可以先从一次项目诊断开始。</p><div class="phone-list"><a href="tel:15213217592"><small>朱老师 · 工作坊与服务预约</small><strong>152 1321 7592</strong></a><a href="tel:18696987413"><small>杜老师 · 项目与专家咨询</small><strong>186 9698 7413</strong></a></div></div><div class="qr-grid"><figure><div><img class="static-qr" src="assets/wechat-workshop-qr.jpg" alt="工作坊预约报名二维码"></div><figcaption><strong>工作坊与课程预约</strong><span>扫码添加朱老师，发送“姓名＋单位＋意向产品”，快速确认名额、时间与报名流程。</span></figcaption></figure><figure><div><img class="static-qr" src="assets/wechat-consulting-qr.jpg" alt="项目咨询预约报名二维码"></div><figcaption><strong>项目与专家咨询</strong><span>适合产业学院、内涵建设、AI工作流及机构合作，扫码后发送已生成的咨询摘要。</span></figcaption></figure></div></div></section>
   </main>
   <footer><div class="footer-inner"><div><strong>重庆市早舟科技有限公司</strong><span>前身：重庆市九源教育</span></div><p>产教融合 · 学校内涵建设 · AI 赋能教育</p><a href="#top">返回顶部 ↑</a></div></footer>
+  <aside class="smart-assistant" id="ai-consulting" aria-label="早舟智能咨询助手演示版">
+    <button class="assistant-launcher" id="assistant-launcher" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="assistant-launcher-icon">AI</span><span><small>第5版新功能</small><strong>智能咨询助手</strong></span></button>
+    <div class="assistant-backdrop" id="assistant-backdrop" hidden></div>
+    <section class="assistant-panel" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-title" hidden>
+      <header class="assistant-panel-header"><div><span class="assistant-status"><i></i> 演示版在线</span><h2 id="assistant-title">早舟智能咨询助手</h2></div><button type="button" id="assistant-close" aria-label="关闭智能咨询助手">×</button></header>
+      <div class="assistant-notice"><strong>AI演示说明</strong><span>依据官网与预设规则回答 · 不上传、不保存本轮内容</span></div>
+      <div class="assistant-messages" id="assistant-messages" aria-live="polite"><article class="assistant-message assistant-reply"><span class="assistant-avatar">早舟AI</span><div><h3>您好，我是早舟智能咨询助手</h3><p>我可以帮助您了解早舟科技、产业学院、学校内涵建设、AI赋能场景和平哥系列产品，也可以用三个问题完成一次需求预诊断。</p><ul><li>当前为第5版演示框架</li><li>回答来自官网公开内容与预设规则</li><li>本轮对话不会上传或保存</li></ul><small>回答依据：早舟官网第5版演示知识库</small></div></article><div id="assistant-diagnosis-step"></div></div>
+      <div class="assistant-quick-questions" id="assistant-quick-questions"><button type="button" data-question="我来自院校">我来自院校</button><button type="button" data-question="我来自企业">我来自企业</button><button type="button" data-question="我想了解课程">我想了解课程</button><button type="button" data-question="我有项目难题">我有项目难题</button></div>
+      <form class="assistant-input" id="assistant-input"><label class="sr-only" for="assistant-question">输入您的问题</label><input id="assistant-question" placeholder="例如：8800元工作坊适合谁？" maxlength="160"><button type="submit" aria-label="发送问题">↑</button></form>
+      <footer class="assistant-panel-footer"><button type="button" id="assistant-reset">重新开始</button><a href="#contact" id="assistant-human">转人工服务</a></footer>
+    </section>
+  </aside>
   <script>
     const consultationForm = document.getElementById('diagnosis-form');
     const summaryBox = document.getElementById('form-summary');
@@ -2412,5 +2921,127 @@ summary:focus-visible {
       await navigator.clipboard.writeText(summaryText.textContent);
       copyButton.textContent = '已复制，可扫码发送';
     });
+
+    const assistantRoot = document.getElementById('ai-consulting');
+    const assistantLauncher = document.getElementById('assistant-launcher');
+    const assistantPanel = document.getElementById('assistant-panel');
+    const assistantBackdrop = document.getElementById('assistant-backdrop');
+    const assistantClose = document.getElementById('assistant-close');
+    const assistantMessages = document.getElementById('assistant-messages');
+    const assistantInput = document.getElementById('assistant-input');
+    const assistantQuestion = document.getElementById('assistant-question');
+    const assistantQuick = document.getElementById('assistant-quick-questions');
+    const diagnosisStepBox = document.getElementById('assistant-diagnosis-step');
+    let diagnosisStep = 0;
+    let diagnosis = {};
+
+    const openAssistant = () => {
+      assistantRoot.classList.add('is-open');
+      assistantPanel.hidden = false;
+      assistantBackdrop.hidden = false;
+      assistantLauncher.setAttribute('aria-expanded', 'true');
+      setTimeout(() => assistantQuestion.focus(), 40);
+    };
+    const closeAssistant = () => {
+      assistantRoot.classList.remove('is-open');
+      assistantPanel.hidden = true;
+      assistantBackdrop.hidden = true;
+      assistantLauncher.setAttribute('aria-expanded', 'false');
+    };
+    assistantLauncher.addEventListener('click', openAssistant);
+    assistantClose.addEventListener('click', closeAssistant);
+    assistantBackdrop.addEventListener('click', closeAssistant);
+    document.getElementById('assistant-human').addEventListener('click', closeAssistant);
+
+    const replies = {
+      company: {title:'重庆市早舟科技有限公司',body:'早舟科技前身为九源教育，团队深耕职业教育20年，主要服务全国大中专院校、本科院校，以及产教融合相关国企、央企和优质民营企业。',bullets:['产教融合与产业学院','学校内涵建设','AI赋能教育与产教融合工作场景'],source:'官网第01—02部分：关于早舟与三大业务',action:['了解早舟科技','#about']},
+      college: {title:'院校客户可以从这里开始',body:'建议先明确您所在学校、负责岗位、项目阶段和最希望解决的问题。持续学习可先了解成长圈；已有具体任务，可进入专题工作坊或项目诊断。',bullets:['初步了解：内容中心或399元成长圈','单点难题：8800元专题工作坊','真实复杂项目：19800元旗舰班或机构服务'],source:'演示版产品匹配规则',action:['开始完整需求预诊断','#diagnosis']},
+      enterprise: {title:'企业客户可以从这里开始',body:'企业进入职业院校通常需要先厘清资源、产品、目标专业、合作机制和持续收益。单点能力提升可选择专题工作坊，真实入校项目建议先做机构诊断。',bullets:['企业入校路径设计','校企合作机制与商务模式','产业学院或专业群项目','知识产品化与标杆成果'],source:'演示版企业客户匹配规则',action:['提交企业项目需求','#diagnosis']},
+      price: {title:'早舟公开参考产品路径',body:'官网展示免费内容、399元成长圈、8800元专题工作坊、19800元旗舰工作坊、39800元操盘手计划、10万元事业大会员及10万元起的机构定制服务。',bullets:['公开价格用于帮助理解产品层级','名额、权益、发票与履约规则以最终说明为准','机构项目和复杂需求需要单独诊断报价'],source:'官网第04部分：产教融合产品矩阵',action:['查看完整产品矩阵','#products']},
+      growth: {title:'平哥产教融合成长圈',body:'公开参考价为399元/年，面向院校干部、教师、企业项目人员和职业教育同行。核心价值是持续获得行业判断、案例会诊、工具资料与社群连接。',bullets:['全年约40场线上成长夜话','政策解读、案例拆解与公开会诊','不包含一对一咨询、方案代写和无限答疑'],source:'官网第04部分：产教融合产品矩阵',action:['查看成长圈详情','#product-2']},
+      workshop: {title:'产教融合专题实战工作坊',body:'公开参考价为8800元，采用两天一夜、小班共创方式，围绕一个明确问题集中突破，适合已有单点需求的客户。',bullets:['AI赋能产教融合','企业进入职业院校','产业学院运营与项目设计','职教专家IP与知识产品化'],source:'官网第04部分：产教融合产品矩阵',action:['查看专题工作坊','#product-3']},
+      flagship: {title:'项目操盘与成果共创旗舰工作坊',body:'公开参考价为19800元，适合正在承担真实项目的负责人。重点是形成诊断报告、合作机制、成果路径与90天行动清单。',bullets:['课前项目诊断','三天两夜现场共创','一对一专项咨询','阶段性跟踪'],source:'官网第04部分：产教融合产品矩阵',action:['查看旗舰工作坊','#product-4']},
+      operator: {title:'产教融合项目操盘手研修计划',body:'公开参考价为39800元，采用申请制和3至6个月周期式培养，目标是从听懂产教融合升级为能够独立操盘项目。',bullets:['战略判断与项目设计','方案写作与商务谈判','真实项目与导师辅导','项目路演和个人案例'],source:'官网第04部分：产教融合产品矩阵',action:['查看操盘手计划','#product-5']},
+      service: {title:'机构定制解决方案',body:'面向院校、二级学院、央国企、产业园区和行业组织，参考价格10万元起，实际报价需根据项目范围、周期、调研深度和交付成果由人工确认。',bullets:['团队调研与项目诊断','顶层设计和产业学院运营','90天或年度项目陪跑','成果提炼与标杆案例打造'],source:'官网第04部分：机构定制解决方案',action:['填写机构项目需求','#diagnosis']},
+      industry: {title:'产教融合与产业学院服务',body:'早舟从合作模式、专业群与产业链对接开始，进一步支持产业学院实体化运营、企业参与机制、知识资产化和成果评价，目标是让项目持续运行而不止于签约挂牌。',bullets:['产业学院规划与运营','产教融合项目策划','校企合作机制建设','成果提炼与标杆案例打造'],source:'官网第02部分：三大业务',action:['查看解决方案','#solutions']},
+      school: {title:'学校内涵建设服务',body:'围绕党建、战略规划、教学、德育和校园文化，早舟提供从调研、规划、计划和课题研究，到成果打造、经验总结、教师培训与教材编制的全过程支持。',bullets:['战略规划与专项计划','课题研究与成果表达','文化、教学与德育策划','教师培训与教材编制'],source:'官网第02部分：三大业务',action:['填写学校需求','#diagnosis']},
+      ai: {title:'AI赋能教育与产教融合场景',body:'早舟主张让AI进入真实工作流，而不是停留在工具演示。典型场景包括调研分析、方案策划、教学应用、项目运营、成果沉淀与团队培训。',bullets:['需求诊断','智能策划','实体运营','成果量化'],source:'官网第03部分：AI工作流',action:['查看AI工作流','#workflow']},
+      founder: {title:'杜平（平哥）',body:'杜平是早舟科技创始人兼董事长，长期深耕职业教育与产教融合，带领团队深入学校和企业现场，关注产业学院运营、学校内生能力和AI工作流。',bullets:['职业教育与产教融合实战专家','平哥聊职教内容品牌创始人','多家国企、央企及民企产教融合顾问'],source:'官网第01部分：关于早舟',action:['查看平哥介绍','#about']},
+      content: {title:'平哥内容中心',body:'官网将微信视频号与公众号作为日常观看入口，飞书作为专题资料库和内部归档入口。收到四个账号二维码后，可进一步实现扫码直达。',bullets:['政策与趋势','产业学院','AI赋能','项目操盘'],source:'官网第06部分：内容中心',action:['进入内容中心','#media']},
+      case: {title:'案例成果与公开依据',body:'官网已展示产教融合线下工作坊、产业学院实体化运营辅导、AI时代学校管理能力提升等代表案例，并整理了更多院校和政府网站公开报道。',bullets:['每个案例优先链接原发布单位','更多二十年案例将根据客户授权持续上线'],source:'官网第05部分：案例成果',action:['查看案例成果','#cases']},
+      human: {title:'这类问题建议由工作人员确认',body:'课程报名、工作坊与日常服务预约可联系朱老师；机构项目、专家咨询、战略合作及复杂项目可联系杜老师。',bullets:['朱老师：152 1321 7592','杜老师：186 9698 7413','合同、退款、发票、投诉与最终报价必须由人工确认'],source:'官网联系我们与演示版转人工规则',action:['查看联系方式与二维码','#contact']},
+      fallback: {title:'这个问题需要补充一些信息',body:'目前演示知识库还没有足够依据给出可靠答案。您可以换一种说法，或填写需求预诊断，由工作人员结合单位、身份和项目阶段进一步判断。',bullets:['我不会编造没有依据的答案','复杂项目、合同和最终价格必须转人工','后续将根据正式资料持续扩充知识库'],source:'演示版安全回答规则',action:['填写需求预诊断','#diagnosis']}
+    };
+
+    const answerQuestion = (question) => {
+      const q = question.toLowerCase().replaceAll('，','').replaceAll('？','');
+      const has = (...words) => words.some((word) => q.includes(word));
+      if (has('退款','合同','发票','投诉','优惠','折扣','保证','承诺','获奖','验收','人工','联系','电话','微信','报名','预约')) return replies.human;
+      if (has('399','成长圈')) return replies.growth;
+      if (has('8800','专题班','专题工作坊')) return replies.workshop;
+      if (has('19800','旗舰','项目共创')) return replies.flagship;
+      if (has('39800','操盘手','研修计划')) return replies.operator;
+      if (has('机构','定制','学校项目','企业项目','10万','100000','大会员')) return replies.service;
+      if (has('多少钱','价格','费用','收费','产品','课程')) return replies.price;
+      if (has('产业学院','产教融合')) return replies.industry;
+      if (has('学校','内涵','党建','德育','教材','课题')) return replies.school;
+      if (has('ai','人工智能','工作流','智能')) return replies.ai;
+      if (has('平哥','杜平','创始人','董事长')) return replies.founder;
+      if (has('案例','成果','客户','合作过')) return replies.case;
+      if (has('视频','直播','公众号','文章','内容')) return replies.content;
+      if (has('院校','老师','教师','学校领导')) return replies.college;
+      if (has('企业','央企','国企','民企','入校')) return replies.enterprise;
+      if (has('公司','早舟','九源','做什么','介绍')) return replies.company;
+      return replies.fallback;
+    };
+
+    const appendVisitor = (text) => {
+      const box = document.createElement('div');
+      box.className = 'assistant-message visitor-message';
+      box.textContent = text;
+      diagnosisStepBox.before(box);
+    };
+    const appendReply = (reply) => {
+      const item = document.createElement('article');
+      item.className = 'assistant-message assistant-reply';
+      const avatar = document.createElement('span'); avatar.className = 'assistant-avatar'; avatar.textContent = '早舟AI';
+      const body = document.createElement('div');
+      const title = document.createElement('h3'); title.textContent = reply.title; body.append(title);
+      const text = document.createElement('p'); text.textContent = reply.body; body.append(text);
+      if (reply.bullets) { const list=document.createElement('ul'); reply.bullets.forEach((value)=>{const li=document.createElement('li');li.textContent=value;list.append(li)}); body.append(list); }
+      const source=document.createElement('small'); source.textContent='回答依据：'+reply.source; body.append(source);
+      if (reply.action) { const link=document.createElement('a'); link.href=reply.action[1]; link.innerHTML=reply.action[0]+' <span>→</span>'; link.addEventListener('click',closeAssistant); body.append(link); }
+      item.append(avatar,body); diagnosisStepBox.before(item); assistantMessages.scrollTop=assistantMessages.scrollHeight;
+    };
+    const exchange = (question, reply) => { appendVisitor(question); appendReply(reply || answerQuestion(question)); };
+
+    const renderDiagnosis = () => {
+      if (!diagnosisStep) { diagnosisStepBox.innerHTML=''; return; }
+      const titles=['','您的身份更接近哪一类？','这次最关注哪个方向？','项目目前处于什么阶段？'];
+      const options=diagnosisStep===1?['院校管理者','教师/项目负责人','企业负责人','其他同行']:diagnosisStep===2?['产业学院与产教融合','学校内涵建设','AI赋能工作流','课程与能力成长']:['初步了解','正在立项','推进受阻','需要成果提炼'];
+      diagnosisStepBox.className='assistant-diagnosis-step';
+      diagnosisStepBox.innerHTML='<span>需求预诊断 · 第 '+diagnosisStep+' / 3 步</span><h3>'+titles[diagnosisStep]+'</h3><div>'+options.map((option)=>'<button type="button" data-option="'+option+'">'+option+'</button>').join('')+'</div><button class="assistant-cancel-diagnosis" type="button">暂不诊断</button>';
+      diagnosisStepBox.querySelectorAll('[data-option]').forEach((button)=>button.addEventListener('click',()=>chooseDiagnosis(button.dataset.option)));
+      diagnosisStepBox.querySelector('.assistant-cancel-diagnosis').addEventListener('click',()=>{diagnosisStep=0;renderDiagnosis()});
+      assistantMessages.scrollTop=assistantMessages.scrollHeight;
+    };
+    const chooseDiagnosis = (value) => {
+      if (diagnosisStep===1) { diagnosis.role=value; diagnosisStep=2; renderDiagnosis(); return; }
+      if (diagnosisStep===2) { diagnosis.need=value; diagnosisStep=3; renderDiagnosis(); return; }
+      diagnosis.stage=value; diagnosisStep=0; renderDiagnosis();
+      let body='建议先查看免费内容与399元成长圈，持续了解趋势和方法，再决定是否进入线下产品。'; let action=['查看产品矩阵','#products'];
+      if (diagnosis.need==='产业学院与产教融合') { body=diagnosis.stage==='推进受阻'||diagnosis.stage==='需要成果提炼'?'您更接近真实复杂项目，建议优先做完整项目诊断，再判断19800元旗舰工作坊或机构定制服务。':'建议先明确合作企业、目标专业、当前机制和预期成果，再判断专题工作坊或项目共创产品。'; action=['填写完整项目信息','#diagnosis']; }
+      if (diagnosis.need==='学校内涵建设') { body='学校内涵建设通常涉及多部门与成果体系，建议直接填写完整需求，由工作人员判断是专项策划、教师培训还是机构项目服务。'; action=['填写学校需求','#diagnosis']; }
+      if (diagnosis.need==='AI赋能工作流') { body='建议先查看AI工作流；如已有明确场景，可进一步考虑专题工作坊或机构项目共创。'; action=['查看AI工作流','#workflow']; }
+      exchange('完成三步需求预诊断',{title:'需求预诊断已生成',body,bullets:['您的身份：'+diagnosis.role,'关注方向：'+diagnosis.need,'项目阶段：'+diagnosis.stage,'本结果仅用于演示，不构成报价或项目承诺'],source:'演示版需求匹配规则',action});
+    };
+
+    assistantQuick.querySelectorAll('[data-question]').forEach((button)=>button.addEventListener('click',()=>{
+      const question=button.dataset.question;
+      if (question==='我有项目难题') { exchange(question,{title:'先用三个问题做一次需求预诊断',body:'我会根据您的身份、关注方向和项目阶段给出初步路径。演示过程不会收集姓名、电话，也不会上传保存。',source:'演示版需求匹配规则'}); diagnosis={}; diagnosisStep=1; renderDiagnosis(); return; }
+      exchange(question, question==='我来自院校'?replies.college:question==='我来自企业'?replies.enterprise:replies.price);
+    }));
+    assistantInput.addEventListener('submit',(event)=>{event.preventDefault();const question=assistantQuestion.value.trim();if(!question)return;exchange(question);assistantQuestion.value=''});
+    document.getElementById('assistant-reset').addEventListener('click',()=>{assistantMessages.querySelectorAll('.visitor-message,.assistant-reply:not(:first-child)').forEach((node)=>node.remove());diagnosis={};diagnosisStep=0;renderDiagnosis()});
   </script>
 </body></html>
