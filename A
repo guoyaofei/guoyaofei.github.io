@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="重庆市早舟科技有限公司，聚焦职业教育、产教融合、产业学院建设、学校内涵建设与AI赋能教育。">
+  <meta name="theme-color" content="#0b243b">
+  <title>早舟科技｜职业教育与产教融合解决方案</title>
+
+  <style>
+    :root {
+      --navy: #0b243b;
+      --navy-light: #163955;
+      --orange: #ed8427;
+      --orange-dark: #d96f16;
+      --cream: #f4efe5;
+      --white: #ffffff;
+      --text: #243442;
+      --muted: #697985;
+      --line: rgba(11, 36, 59, 0.12);
+      --shadow: 0 18px 50px rgba(11, 36, 59, 0.12);
+      --radius: 22px;
+      --container: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--white);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      color: var(--white);
+      background: rgba(11, 36, 59, 0.94);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: var(--orange);
+      border-radius: 12px 12px 12px 3px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta,
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .nav-cta,
+    .button-primary {
+      color: var(--white);
+      background: var(--orange);
+    }
+
+    .nav-cta:hover,
+    .button-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hero {
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 85% 25%, rgba(237, 132, 39, 0.22), transparent 28%),
+        linear-gradient(135deg, #071a2b 0%, var(--navy) 55%, #174565 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      align-items: center;
+      gap: 70px;
+      padding: 92px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 20px 0 24px;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-description {
+      max-width: 650px;
+      margin-bottom: 34px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 470px;
+      padding: 26px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 34px;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .visual-main {
+      height: 100%;
+      min-height: 418px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, transparent 25%, rgba(7, 26, 43, 0.88) 100%),
+        linear-gradient(135deg, #315d79, #102f46);
+      border-radius: 24px;
+    }
+
+    .visual-label {
+      align-self: flex-start;
+      margin-bottom: auto;
+      padding: 8px 13px;
+      color: var(--navy);
+      background: var(--cream);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .visual-main strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 27px;
+    }
+
+    .visual-main p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    section {
+      padding: 110px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 48px;
+    }
+
+    .section-heading h2 {
+      margin: 14px 0 16px;
+      color: var(--navy);
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.18;
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .solutions {
+      background: var(--cream);
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .solution-card {
+      min-height: 280px;
+      padding: 34px;
+      background: var(--white);
+      border: 1px solid rgba(11, 36, 59, 0.06);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 35px rgba(11, 36, 59, 0.06);
+      transition: 0.25s ease;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-number {
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .solution-card h3 {
+      margin: 36px 0 12px;
+      color: var(--navy);
+      font-size: 25px;
+    }
+
+    .solution-card p {
+      color: var(--muted);
+    }
+
+    .card-link {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .advantage-visual {
+      min-height: 500px;
+      display: flex;
+      align-items: flex-end;
+      padding: 42px;
+      color: var(--white);
+      background:
+        linear-gradient(180deg, transparent, rgba(11, 36, 59, 0.92)),
+        linear-gradient(135deg, #e7aa70, var(--orange));
+      border-radius: 28px;
+    }
+
+    .advantage-visual strong {
+      display: block;
+      font-size: 32px;
+      line-height: 1.3;
+    }
+
+    .advantage-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .advantage-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 18px;
+      padding: 23px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .advantage-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: var(--orange);
+      background: rgba(237, 132, 39, 0.1);
+      border-radius: 16px;
+      font-weight: 800;
+    }
+
+    .advantage-item h3 {
+      margin-bottom: 5px;
+      color: var(--navy);
+      font-size: 19px;
+    }
+
+    .advantage-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .content-section {
+      color: var(--white);
+      background: var(--navy);
+    }
+
+    .content-section .section-heading h2 {
+      color: var(--white);
+    }
+
+    .content-section .section-heading p {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 22px;
+    }
+
+    .content-card {
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 34px;
+      background: var(--navy-light);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+    }
+
+    .content-card.accent {
+      background: var(--orange);
+    }
+
+    .content-card span {
+      margin-bottom: auto;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+
+    .content-card h3 {
+      margin-bottom: 10px;
+      font-size: 27px;
+    }
+
+    .content-card p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .contact {
+      background: var(--cream);
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+      padding: 58px;
+      color: var(--white);
+      background: var(--navy);
+      border-radius: 30px;
+    }
+
+    .contact-box h2 {
+      margin-bottom: 12px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.2;
+    }
+
+    .contact-box p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    footer {
+      padding: 34px 0;
+      color: rgba(255, 255, 255, 0.58);
+      background: #061725;
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid,
+      .advantages-grid,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 45px;
+        padding: 72px 0;
+      }
+
+      .hero-panel {
+        min-height: 390px;
+      }
+
+      .visual-main {
+        min-height: 338px;
+      }
+
+      .solution-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        grid-template-columns: 1fr;
+        padding: 40px 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .nav {
+        min-height: 66px;
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav-cta {
+        min-height: 40px;
+        padding: 0 15px;
+        font-size: 13px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      section {
+        padding: 76px 0;
+      }
+
+      .hero-panel,
+      .solution-card {
+        padding: 20px;
+      }
+
+      .advantage-visual {
+        min-height: 360px;
+        padding: 28px;
+      }
+
+      .footer-row {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="早舟科技首页">
+        <span class="brand-mark">早</span>
+        <span>早舟科技</span>
+      </a>
+
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#home">首页</a>
+        <a href="#solutions">解决方案</a>
+        <a href="#advantages">核心能力</a>
+        <a href="#insights">内容中心</a>
+        <a href="#contact">关于我们</a>
+      </nav>
+
+      <a class="nav-cta" href="#contact">业务咨询</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Education · Industry · Innovation</span>
+          <h1>让教育与产业真正连接</h1>
+          <p class="hero-description">
+            重庆市早舟科技有限公司聚焦职业教育与产教融合，
+            围绕产业学院、学校内涵建设和AI赋能教育，
+            为院校与合作伙伴提供具有长期价值的解决方案。
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#solutions">了解解决方案</a>
+            <a class="button button-secondary" href="#contact">预约沟通</a>
+          </div>
+        </div>
+
+        <div class="hero-panel" aria-label="业务形象展示区域">
+          <div class="visual-main">
+            <span class="visual-label">原网站核心图片替换区域</span>
+            <div>
+              <strong>面向未来的教育创新实践</strong>
+              <p>连接院校、产业、人才与技术，共同创造可持续价值。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="solutions" id="solutions">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Solutions</span>
+          <h2>围绕院校发展需求，构建系统化解决方案</h2>
+          <p>
+            从战略规划到项目落地，从专业建设到人才培养，
+            以更清晰的业务结构帮助访客快速找到对应服务。
+          </p>
+        </div>
+
+        <div class="solution-grid">
+          <article class="solution-card">
+            <span class="card-number">01 / INDUSTRY</span>
+            <h3>产教融合</h3>
+            <p>促进教育链、人才链与产业链协同，探索校企合作和协同育人的落地路径。</p>
+            <a class="card-link" href="#contact">咨询相关方案 →</a>
+          </article>
+
+          <article class="solution-card">
+            <span class="card-number">02 / COLLEGE</span>
+            <h3>产业学院建设</h3>
+            <p>围绕产业需求与学校定位，提供产业学院规划、建设及持续运营支持。</p>
+            <a class="card-link" href="#contact">咨询相关方案 →</a>
+          </article>
+
+          <article class="solution-card">
+            <span class="card-number">03 / DEVELOPMENT</span>
+            <h3>学校内涵建设</h3>
+            <p>服务专业、课程、师资与人才培养体系建设，推动院校形成长期发展能力。</p>
+            <a class="card-link" href="#contact">咨询相关方案 →</a>
+          </article>
+
+          <article class="solution-card">
+            <span class="card-number">04 / AI EDUCATION</span>
+            <h3>AI赋能教育</h3>
+            <p>探索人工智能在教学、管理、资源建设和人才培养过程中的实际应用。</p>
+            <a class="card-link" href="#contact">咨询相关方案 →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="advantages">
+      <div class="container advantages-grid">
+        <div class="advantage-visual">
+          <strong>不只提供方案，<br>更关注方案如何落地。</strong>
+        </div>
+
+        <div>
+          <div class="section-heading">
+            <span class="eyebrow">Capabilities</span>
+            <h2>以专业能力支撑项目全过程</h2>
+          </div>
+
+          <div class="advantage-list">
+            <article class="advantage-item">
+              <span class="advantage-icon">01</span>
+              <div>
+                <h3>需求洞察</h3>
+                <p>从院校实际需求与产业发展趋势出发，建立清晰的项目目标。</p>
+              </div>
+            </article>
+
+            <article class="advantage-item">
+              <span class="advantage-icon">02</span>
+              <div>
+                <h3>系统规划</h3>
+                <p>统筹专业、课程、师资、平台与运营，避免服务内容彼此割裂。</p>
+              </div>
+            </article>
+
+            <article class="advantage-item">
+              <span class="advantage-icon">03</span>
+              <div>
+                <h3>项目实施</h3>
+                <p>将规划转化为可执行的工作内容，持续支持项目建设与优化。</p>
+              </div>
+            </article>
+
+            <article class="advantage-item">
+              <span class="advantage-icon">04</span>
+              <div>
+                <h3>内容传播</h3>
+                <p>通过官网、公众号和视频号形成内容协同，沉淀长期品牌价值。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="insights">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Insights</span>
+          <h2>通过专业内容，持续分享教育创新实践</h2>
+          <p>原网站代表文章、培训信息和视频内容可集中在这里展示。</p>
+        </div>
+
+        <div class="content-grid">
+          <article class="content-card">
+            <span>代表文章 / 行业观察</span>
+            <h3>职业教育与产教融合的实践思考</h3>
+            <p>使用原网站真实文章标题、摘要和封面图片替换当前内容。</p>
+          </article>
+
+          <article class="content-card accent">
+            <span>公众号与视频号</span>
+            <h3>关注最新动态</h3>
+            <p>电脑端展示二维码，手机端提供可直接跳转或复制的访问入口。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <h2>让我们从一次深入沟通开始</h2>
+            <p>如果您正在规划相关项目，欢迎与早舟科技交流实际需求。</p>
+          </div>
+          <a class="button button-primary" href="mailto:">联系业务顾问</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© 重庆市早舟科技有限公司</span>
+      <span>实际地址、电话、邮箱及备案信息使用原网站内容替换</span>
+    </div>
+  </footer>
+</body>
+</html>
