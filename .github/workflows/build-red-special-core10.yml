@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: pip install python-docx
       - name: Build Word package
-        run: python artifact_core_build/build_core10.py
+        run: python artifact_core_build/runner.py
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
