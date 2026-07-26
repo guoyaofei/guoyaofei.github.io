@@ -11,4 +11,4 @@ shutil.make_archive(str(archive_base), "zip", OUT, ROOT.name)
 print("Generated Word files:", len(list(ROOT.glob("*.docx"))))
 print(str(archive_base) + ".zip")
 '''
-exec(compile(src + append, str(p), 'exec'), {'__name__': '__main__'})
+exec(compile(src + append, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
