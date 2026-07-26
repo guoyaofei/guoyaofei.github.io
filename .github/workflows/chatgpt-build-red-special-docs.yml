@@ -1,0 +1,32 @@
+name: Build Red Special System Documents
+
+on:
+  pull_request:
+    paths:
+      - 'chatgpt-docs/**'
+      - '.github/workflows/chatgpt-build-red-special-docs.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-documents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip python-docx lxml
+      - name: Generate Word documents
+        run: python chatgpt-docs/generate_system_docs.py
+      - name: Upload generated documents
+        uses: actions/upload-artifact@v4
+        with:
+          name: 开江中学实验学校红专八系统建设方案
+          path: chatgpt-docs/output/*
+          if-no-files-found: error
+          retention-days: 7
