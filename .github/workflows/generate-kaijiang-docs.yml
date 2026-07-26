@@ -1,0 +1,43 @@
+name: Generate Kaijiang Red-Special DOCX
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-documents:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install document dependencies
+        run: python -m pip install --upgrade pip python-docx
+
+      - name: Generate ten Word documents
+        env:
+          PYTHONPATH: tools
+          OUT_DIR: generated_docs
+        run: python tools/generate_kaijiang_docs.py
+
+      - name: List generated files
+        run: find generated_docs -maxdepth 1 -type f -printf '%f\n' | sort
+
+      - name: Upload downloadable document package
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaijiang-red-special-ten-core-documents
+          path: generated_docs/
+          if-no-files-found: error
+          retention-days: 7
