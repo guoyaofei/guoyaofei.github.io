@@ -1,0 +1,53 @@
+name: Build Optimization Explanation Document
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'artifact_build_opt_notes/**'
+      - '.github/workflows/build-opt-notes.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install document dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice-writer fonts-noto-cjk poppler-utils
+          pip install python-docx
+      - name: Build Word document
+        run: python artifact_build_opt_notes/build.py
+      - name: Convert to PDF
+        run: |
+          libreoffice --headless --convert-to pdf --outdir artifact_build_opt_notes/output artifact_build_opt_notes/output/*.docx
+      - name: Validate generated files
+        run: |
+          test -s artifact_build_opt_notes/output/开江中学实验学校党委书记15份参考文件优化完善说明.docx
+          test -s artifact_build_opt_notes/output/开江中学实验学校党委书记15份参考文件优化完善说明.pdf
+          python - <<'PY'
+          from pathlib import Path
+          from docx import Document
+          p = Path('artifact_build_opt_notes/output/开江中学实验学校党委书记15份参考文件优化完善说明.docx')
+          d = Document(p)
+          assert len(d.paragraphs) > 150, len(d.paragraphs)
+          assert len(d.tables) >= 18, len(d.tables)
+          print('paragraphs', len(d.paragraphs), 'tables', len(d.tables))
+          PY
+          pdfinfo artifact_build_opt_notes/output/开江中学实验学校党委书记15份参考文件优化完善说明.pdf
+          pdftotext artifact_build_opt_notes/output/开江中学实验学校党委书记15份参考文件优化完善说明.pdf /tmp/notes.txt
+          test $(wc -c < /tmp/notes.txt) -gt 10000
+      - name: Upload downloadable package
+        uses: actions/upload-artifact@v4
+        with:
+          name: school-secretary-optimization-explanation
+          path: artifact_build_opt_notes/output/*
+          if-no-files-found: error
+          retention-days: 7
