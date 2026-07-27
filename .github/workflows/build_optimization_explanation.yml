@@ -1,0 +1,55 @@
+name: Build Optimization Explanation Document
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'artifact_opt_explanation/**'
+      - '.github/workflows/build_optimization_explanation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice-writer fonts-noto-cjk poppler-utils zip
+          pip install python-docx
+      - name: Build Word document
+        run: python artifact_opt_explanation/build.py
+      - name: Render PDF and inspect
+        run: |
+          mkdir -p artifact_opt_explanation/output/pdf
+          libreoffice --headless --convert-to pdf --outdir artifact_opt_explanation/output/pdf artifact_opt_explanation/output/*.docx
+          test -s artifact_opt_explanation/output/开江中学实验学校党委书记15份参考文件优化完善说明.docx
+          test -s artifact_opt_explanation/output/pdf/开江中学实验学校党委书记15份参考文件优化完善说明.pdf
+          pdfinfo artifact_opt_explanation/output/pdf/*.pdf
+          pdftotext artifact_opt_explanation/output/pdf/*.pdf artifact_opt_explanation/output/extracted.txt
+          test $(wc -c < artifact_opt_explanation/output/extracted.txt) -gt 5000
+      - name: Package files
+        run: |
+          cd artifact_opt_explanation/output
+          cp pdf/开江中学实验学校党委书记15份参考文件优化完善说明.pdf .
+          rm -rf pdf extracted.txt
+          cat > 00_使用说明.txt <<'EOF'
+          文件包包含：
+          1. 可编辑Word版：《开江中学实验学校党委书记15份参考文件优化完善说明》
+          2. 便于直接阅读和打印的PDF版
+
+          Word目录如未自动显示，请在目录位置右键选择“更新域”。
+          EOF
+      - name: Upload document package
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimization-explanation-document
+          path: artifact_opt_explanation/output/**
+          if-no-files-found: error
+          retention-days: 7
