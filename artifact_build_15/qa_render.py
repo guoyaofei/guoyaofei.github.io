@@ -65,7 +65,6 @@ def make_contact_sheet(doc_name: str, images: list[Path], output: Path) -> None:
 def image_edge_check(path: Path) -> tuple[bool, str]:
     with Image.open(path) as im:
         gray = im.convert("L")
-        # Pixels darker than near-white define rendered content.
         mask = gray.point(lambda p: 255 if p < 245 else 0)
         bbox = mask.getbbox()
         if bbox is None:
@@ -75,6 +74,21 @@ def image_edge_check(path: Path) -> tuple[bool, str]:
         if x0 <= pad or y0 <= pad or x1 >= im.width - pad or y1 >= im.height - pad:
             return False, f"content touches page edge: bbox={bbox}, size={im.size}"
         return True, "ok"
+
+
+def combine_contact_sheets() -> Path:
+    contact_paths = sorted(CONTACT_DIR.glob("*.jpg"))
+    if len(contact_paths) != 15:
+        raise RuntimeError(f"Expected 15 contact sheets, got {len(contact_paths)}")
+    pages = []
+    for path in contact_paths:
+        with Image.open(path) as im:
+            pages.append(im.convert("RGB"))
+    output = QA / "ALL_CONTACT_SHEETS.pdf"
+    pages[0].save(output, save_all=True, append_images=pages[1:], resolution=120.0)
+    for page in pages:
+        page.close()
+    return output
 
 
 def main() -> None:
@@ -93,7 +107,6 @@ def main() -> None:
     total_pages = 0
 
     for index, docx_path in enumerate(docs, 1):
-        # Structural reopen check.
         document = Document(docx_path)
         if not document.paragraphs:
             failures.append(f"{docx_path.name}: no paragraphs")
@@ -133,7 +146,6 @@ def main() -> None:
             ok, message = image_edge_check(img)
             if not ok:
                 edge_warnings.append(f"{img.name}: {message}")
-        # Edge touches are warnings because some table borders/headers may be close but valid.
         report.append(f"{index:02d}. {docx_path.name}")
         report.append(f"    页数：{pages}；段落：{len(document.paragraphs)}；表格：{len(document.tables)}；PDF文本字符：{len(extracted.strip())}")
         report.append(f"    页面边缘检查：{'通过' if not edge_warnings else '需人工关注 ' + '; '.join(edge_warnings[:3])}")
@@ -141,8 +153,10 @@ def main() -> None:
         contact_path = CONTACT_DIR / f"{index:02d}_{docx_path.stem}.jpg"
         make_contact_sheet(docx_path.name, images, contact_path)
 
+    combined_pdf = combine_contact_sheets()
     report.append("")
     report.append(f"Word文件：{len(docs)}份；渲染总页数：{total_pages}页；联系表：{len(list(CONTACT_DIR.glob('*.jpg')))}张。")
+    report.append(f"人工检查用联系表PDF：{combined_pdf.name}。")
     if failures:
         report.append("自动检查未通过事项：")
         report.extend(["- " + item for item in failures])
@@ -152,7 +166,7 @@ def main() -> None:
 
     if failures:
         raise RuntimeError("QA failures:\n" + "\n".join(failures))
-    print("\n".join(report[-5:]))
+    print("\n".join(report[-6:]))
 
 
 if __name__ == "__main__":
