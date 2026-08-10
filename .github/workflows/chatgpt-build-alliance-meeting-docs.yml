@@ -42,6 +42,19 @@ jobs:
           pdftoppm -png -r 120 "chatgpt-docs/output/pdf/01_关于商请重庆建筑工程职业学院承办联盟成立大会并共同推进首批建设任务的函.pdf" chatgpt-docs/output/preview_01/page
           pdftoppm -png -r 120 "chatgpt-docs/output/pdf/02_联盟成立大会会务安排及筹备任务清单.pdf" chatgpt-docs/output/preview_02/page
 
+      - name: Upload generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: alliance-meeting-documents
+          path: |
+            downloads/01_关于商请重庆建筑工程职业学院承办联盟成立大会并共同推进首批建设任务的函.docx
+            downloads/02_联盟成立大会会务安排及筹备任务清单.docx
+            chatgpt-docs/output/pdf/*.pdf
+            chatgpt-docs/output/preview_01/*.png
+            chatgpt-docs/output/preview_02/*.png
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Commit generated documents and previews
         run: |
           git config user.name "ChatGPT Document Builder"
