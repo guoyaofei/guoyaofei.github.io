@@ -1,0 +1,67 @@
+name: Build Zhaoshang Cheyan Agreement Documents
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'chatgpt-docs/generate_zhaoshang_cheyan_agreement.py'
+      - '.github/workflows/chatgpt-build-zhaoshang-cheyan-docs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-documents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install python-docx lxml
+          sudo apt-get update -qq
+          sudo apt-get install -y libreoffice poppler-utils fonts-noto-cjk >/dev/null
+
+      - name: Generate Word documents
+        run: python chatgpt-docs/generate_zhaoshang_cheyan_agreement.py
+
+      - name: Render PDF and previews
+        run: |
+          mkdir -p chatgpt-docs/zhaoshang-output/pdf chatgpt-docs/zhaoshang-output/preview_agreement chatgpt-docs/zhaoshang-output/preview_reply
+          libreoffice --headless --convert-to pdf --outdir chatgpt-docs/zhaoshang-output/pdf "downloads/01_智能网联新能源汽车测试技术产教融合项目合作框架协议_修订标记版.docx"
+          libreoffice --headless --convert-to pdf --outdir chatgpt-docs/zhaoshang-output/pdf "downloads/02_关于合作协议法务审核意见的回复函.docx"
+          pdftoppm -png -r 120 "chatgpt-docs/zhaoshang-output/pdf/01_智能网联新能源汽车测试技术产教融合项目合作框架协议_修订标记版.pdf" chatgpt-docs/zhaoshang-output/preview_agreement/page
+          pdftoppm -png -r 120 "chatgpt-docs/zhaoshang-output/pdf/02_关于合作协议法务审核意见的回复函.pdf" chatgpt-docs/zhaoshang-output/preview_reply/page
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 招商车研协议修订标记版及回复函
+          path: |
+            downloads/01_智能网联新能源汽车测试技术产教融合项目合作框架协议_修订标记版.docx
+            downloads/02_关于合作协议法务审核意见的回复函.docx
+            chatgpt-docs/zhaoshang-output/pdf/*.pdf
+            chatgpt-docs/zhaoshang-output/preview_agreement/*.png
+            chatgpt-docs/zhaoshang-output/preview_reply/*.png
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit generated outputs
+        run: |
+          git config user.name "ChatGPT Document Builder"
+          git config user.email "actions@users.noreply.github.com"
+          git add downloads/*.docx chatgpt-docs/zhaoshang-output/pdf/*.pdf chatgpt-docs/zhaoshang-output/preview_agreement/*.png chatgpt-docs/zhaoshang-output/preview_reply/*.png
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+          else
+            git commit -m "[skip ci] Generate 招商车研 agreement documents"
+            git push origin main
+          fi
