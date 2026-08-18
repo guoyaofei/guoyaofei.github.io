@@ -65,3 +65,5 @@ jobs:
             git commit -m "[skip ci] Generate 招商车研 agreement documents"
             git push origin main
           fi
+
+# Triggered via pull-request merge so the workflow runs on main.
